@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Apply Online — Bridgelink Digital</title>
+  <style>
+    :root{--bg:#f7f8fb;--card:#ffffff;--accent:#2563eb;--muted:#6b7280}
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial;margin:0;background:var(--bg);color:#111}
+    .container{max-width:760px;margin:32px auto;padding:20px}
+    .card{background:var(--card);border-radius:12px;box-shadow:0 6px 20px rgba(16,24,40,0.06);padding:24px}
+    h1{margin:0 0 8px;font-size:20px}
+    p.lead{margin:0 0 18px;color:var(--muted)}
+    form .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    label{display:block;font-size:13px;margin-bottom:6px}
+    input[type="text"],input[type="email"],input[type="tel"],input[type="date"],select{
+      width:100%;padding:10px;border:1px solid #e6e9ef;border-radius:8px;font-size:14px
+    }
+    select[multiple]{height:140px}
+    .full{grid-column:1 / -1}
+    .actions{display:flex;gap:12px;align-items:center;margin-top:16px}
+    button{background:var(--accent);color:#fff;border:0;padding:10px 16px;border-radius:10px;font-weight:600;cursor:pointer}
+    .note{font-size:13px;color:var(--muted)}
+    @media (max-width:640px){.grid{grid-template-columns:1fr}}
+    #successMessage{display:none;margin-top:16px;padding:12px;background:#ecfdf5;border:1px solid #a7f3d0;border-radius:8px;color:#065f46;font-size:14px;}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>Apply Online</h1>
+      <p class="lead">Please fill in the details below to apply. All fields marked with * are required.</p>
+      
+      <!-- ✅ Updated with your working script URL -->
+      <form id="applyForm" action="https://script.google.com/macros/s/AKfycbzIpe49xI5NCa30yVjrD7vbKI_9ZfLm8zlH5Y56XLX9KwvYniz01cdv7WNWKe8iyheWzQ/exec" method="POST">
+        <div class="grid">
+          <div class="full">
+            <label for="fullName">Applicant Full Name *</label>
+            <input id="fullName" name="Applicant Full Name" type="text" placeholder="Jane Doe" required>
+          </div>
+
+          <div>
+            <label for="gender">Gender *</label>
+            <select id="gender" name="Gender" required>
+              <option value="" disabled selected>Select gender</option>
+              <option>Male</option>
+              <option>Female</option>
+              <option>Other</option>
+              <option>Prefer not to say</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="dob">Date of birth *</label>
+            <input id="dob" name="Date of birth" type="date" required>
+          </div>
+
+          <div>
+            <label for="phone">Phone number *</label>
+            <input id="phone" name="Phone number" type="tel" placeholder="+2547XXXXXXXX" pattern="[0-9+\- ()]{6,}" required>
+          </div>
+
+          <div>
+            <label for="email">E-mail address *</label>
+            <input id="email" name="E-mail address" type="email" placeholder="you@example.com" required>
+          </div>
+
+          <div>
+            <label for="programme">Programme *</label>
+            <select id="programme" name="Programme" required>
+              <option value="" disabled selected>Select programme</option>
+              <option>Digital literacy</option>
+              <option>Smartphone skills</option>
+            </select>
+          </div>
+
+          <div class="full">
+            <label for="nextOfKin">Next of kin Full Name *</label>
+            <input id="nextOfKin" name="Next of kin Full Name" type="text" placeholder="Full name" required>
+          </div>
+
+          <div>
+            <label for="nextPhone">Next of kin phone number *</label>
+            <input id="nextPhone" name="Next of kin phone number" type="tel" placeholder="+2547XXXXXXXX" pattern="[0-9+\- ()]{6,}" required>
+          </div>
+
+          <div class="full">
+            <label for="hearAbout">How did you hear about us? <span class="note">(you may select multiple)</span> *</label>
+            <select id="hearAbout" name="How did you hear about us" multiple required>
+              <option value="Twitter">Twitter</option>
+              <option value="Facebook">Facebook</option>
+              <option value="Instagram">Instagram</option>
+              <option value="YouTube">YouTube</option>
+              <option value="Google ads">Google ads</option>
+              <option value="CBO website">CBO website</option>
+              <option value="Our staff">Our staff</option>
+              <option value="Referred by a friend">Referred by a friend</option>
+            </select>
+            <p class="note">On mobile, press and hold to pick more than one option.</p>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button type="submit">Submit application</button>
+          <p class="note">By submitting you confirm the information is correct.</p>
+        </div>
+      </form>
+
+      <div id="successMessage">✅ Successfully submitted! We will contact you within 24 hours.</div>
+
+      <script>
+        const form = document.getElementById('applyForm');
+        form.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const formData = new FormData(form);
+          const data = Object.fromEntries(formData.entries());
+
+          try {
+            const response = await fetch(form.action, {
+              method: 'POST',
+              body: new URLSearchParams(data),
+            });
+
+            if (response.ok) {
+              document.getElementById('successMessage').style.display = 'block';
+              form.reset();
+            }
+          } catch (error) {
+            // No alerts or console logs — silent fail for smooth UX
+          }
+        });
+      </script>
+    </div>
+  </div>
+</body>
+</html>
